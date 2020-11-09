@@ -1,24 +1,29 @@
 * LIBM.CL
   A common lisp wrapper for the [[https://openlibm.org/][openlibm]] mathematical library used by
-  Julia. Openlibm is described as a "high quality, system independent,
-  portable, open source libm implementation"
+  Julia. Openlibm is described as a
+
+  #+BEGIN_QUOTE
+  high quality, system independent, portable, open source libm implementation
+  #+END_QUOTE
 
 * Installation
   Until the project is in Quicklisp, you'll need clone the repository
-  into ~/common-lisp/ directory and then use quicklisp, like so
-  src_lisp{(ql:quickload "libm")}.
+  into your =~/common-lisp/= directory and then use quicklisp to load
+  it, like so src_lisp[:exports code]{(ql:quickload "libm")}.
 
-  If on MS Windows, the easiest way to ensure the library is found is
-  to place the libopenlibm.dll file in the LIBM.CL directory. It can
-  actually be in any directory on the %PATH%, but some people find
-  that troublesome. On UNIX, you'll likely install via a package
-  manager and it will typically place the library in standard location
-  for shared libraries.
+  If on MS Windows, the easiest way to obtain the library is with
+  [[https://www.msys2.org/][MSYS2]] and then place the libopenlibm.dll file in the LIBM.CL
+  directory. It can actually be in any directory on the %PATH%, but
+  some people find that troublesome. On UNIX, you'll likely install
+  via a package manager and it will be the library will automatically
+  be placed standard location for shared libraries.
 
 * Usage
   LIBM.CL can be used as a reference to test the accuracy of a common
   lisp implementation. In my tests using CCL and MS Windows, the two
-  agree to within 15 digits of accuracy.
+  agree to within 15 digits of accuracy for doubles. The most
+  significant differences are in the single float functions. You can
+  see the accuracy obtained in the tests.lisp file.
 
   The library also contains a few functions that did not make it into
   the ANSI CL specification, notably log-gamma and gamma.
@@ -55,7 +60,7 @@
     you could create a version of libm without complex numbers if
     required.
 
-    % %libm-constants
+  * %libm-constants
 
     These are the constants like LOG2E. They are included for
     completeness, but not exported symbols. The thinking is that if you
@@ -71,14 +76,14 @@
 * Status
   Mostly complete. There are a few functions, those requiring
   pointers, for example nan(char*) that haven't been wrapped. There
-  are examples for using pointers elsewhere in the code, but since
-  these are likely rarely used they haven't been wrapped yet.
+  are examples for using pointers elsewhere in the code, if you need
+  to wrap those functions.
 
 * Contributing
   When contributing to this repository, please first discuss major
   changes to the existing code you wish to make via issue. Minor
-  changes and major additions are welcome as long as they are released
-  under the MS-PL License and noted as such within the file(s).
+  changes and major additions are welcome. Please [[https://chris.beams.io/posts/git-commit/][write good commit
+  messages]] for pull requests.
 
 * License
   LIBM.CL is available under the [[https://opensource.org/licenses/MS-PL][Microsoft Public License]].
