@@ -1,15 +1,15 @@
 * LIBM.CL
   A common lisp wrapper for the [[https://openlibm.org/][openlibm]] mathematical library used by
-  Julia. Openlibm is described as a
+  Julia. Openlibm is described as:
 
   #+BEGIN_QUOTE
-  high quality, system independent, portable, open source libm implementation
+  a high quality, system independent, portable, open source libm implementation
   #+END_QUOTE
 
 * Installation
   Until the project is in Quicklisp, you'll need clone the repository
   into your =~/common-lisp/= directory and then use quicklisp to load
-  it, like so src_lisp[:exports code]{(ql:quickload "libm")}.
+  it, like so =(ql:quickload "libm")=.
 
   If on MS Windows, the easiest way to obtain the library is with
   [[https://www.msys2.org/][MSYS2]] and then place the libopenlibm.dll file in the LIBM.CL
