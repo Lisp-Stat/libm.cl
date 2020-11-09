@@ -1,0 +1,84 @@
+* LIBM.CL
+  A common lisp wrapper for the [[https://openlibm.org/][openlibm]] mathematical library used by
+  Julia. Openlibm is described as a "high quality, system independent,
+  portable, open source libm implementation"
+
+* Installation
+  Until the project is in Quicklisp, you'll need clone the repository
+  into ~/common-lisp/ directory and then use quicklisp, like so
+  src_lisp{(ql:quickload "libm")}.
+
+  If on MS Windows, the easiest way to ensure the library is found is
+  to place the libopenlibm.dll file in the LIBM.CL directory. It can
+  actually be in any directory on the %PATH%, but some people find
+  that troublesome. On UNIX, you'll likely install via a package
+  manager and it will typically place the library in standard location
+  for shared libraries.
+
+* Usage
+  LIBM.CL can be used as a reference to test the accuracy of a common
+  lisp implementation. In my tests using CCL and MS Windows, the two
+  agree to within 15 digits of accuracy.
+
+  The library also contains a few functions that did not make it into
+  the ANSI CL specification, notably log-gamma and gamma.
+
+  Finally, if you are interacting with numerical libraries that use
+  IEEE-754, the C99 methods can be useful, for example in raising or
+  detecting a NaN condition.
+
+* The API
+  The library does not shadow CL, so you'll need to specify the
+  package when calling the functions,
+  e.g. src_lisp{libm:acos}. Documentation for C99 is
+  widespread. During development we referred to the [[https://en.cppreference.com/w/c/numeric/math][Common
+  mathematical functions]] and [[https://en.cppreference.com/w/c/numeric/complex][Complex number arithmetic]] pages. We do
+  not wrap long double functions, since there is is only one lisp
+  implementation that implements long double.
+
+  * %libm
+
+    This package contains bindings of the C99 functions as they
+    appear in the C99 specification. This typically means multiple
+    functions with different names doing the same thing, but varying
+    in their argument types. E.g. cos, cosf, ccos and ccosf for
+    doubles, floats, double complex and single float complex arguments
+    respectively.
+
+  * %libm-complex
+
+    Complex numbers requires an additional FFI library, libffi. This
+    library is used in a few languages for C bindings, most notably
+    Python, but is a relatively recent addition to CFFI, and there a
+    few bugs, for example in SBCL. For this reason we've made it a
+    separate package whose symbols are reexported from %libm. This way
+    you could create a version of libm without complex numbers if
+    required.
+
+    % %libm-constants
+
+    These are the constants like LOG2E. They are included for
+    completeness, but not exported symbols. The thinking is that if you
+    are developing a numeric application in Common Lisp, you will
+    likely have created your own constants package.
+
+  * libm
+
+    This is the package that most uses will want. It wraps the
+    multiple C functions into a lisp-like call, dispatching on
+    argument type. Handles complex numbers.
+
+* Status
+  Mostly complete. There are a few functions, those requiring
+  pointers, for example nan(char*) that haven't been wrapped. There
+  are examples for using pointers elsewhere in the code, but since
+  these are likely rarely used they haven't been wrapped yet.
+
+* Contributing
+  When contributing to this repository, please first discuss major
+  changes to the existing code you wish to make via issue. Minor
+  changes and major additions are welcome as long as they are released
+  under the MS-PL License and noted as such within the file(s).
+
+* License
+  LIBM.CL is available under the [[https://opensource.org/licenses/MS-PL][Microsoft Public License]].
