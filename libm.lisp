@@ -315,7 +315,7 @@ If one of the arguments in a NaN, the other is returned."
   (n :int))
 |#
 
-(cl:defun gamma (x) ; Changing the name, no need to keep C99 legacy
+(cl:defun tgamma (x)
   "Returns the gamma function of x."
   (cl:etypecase x
     (cl:double-float (%libm:tgamma  x))
